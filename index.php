@@ -5,15 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Php Hotel</title>
 </head>
-
-<style>
-    * {
-        background-color: blue;
-        color: bisque;
-    }
-</style>
 
 <body>
     <?php
@@ -56,15 +51,45 @@
         ],
 
     ];
-
-    foreach ($hotels as $hotel) {
-        echo $name = $hotel["name"] . '<br>';
-        echo $description = $hotel["description"] . '<br>';
-        echo $parking = $hotel["parking"] . '<br>';
-        echo $vote = $hotel["vote"] . '<br>';
-        echo $distanceToCenter = $hotel["distance_to_center"] . '<br>';
-    }
     ?>
+
+    <table class="table bg-primary">
+        <thead>
+            <tr>
+                <th scope="col">Nome Hotel</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Parcheggio</th>
+                <th scope="col">Voto</th>
+                <th scope="col">Distanza Centro</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($hotels as $hotel) {
+                $name = $hotel["name"];
+                $description = $hotel["description"];
+                $parking = $hotel["parking"];
+                $vote = $hotel["vote"];
+                $distance = $hotel["distance_to_center"];
+
+                echo '<tr>';
+                echo '<th scope="row">' . $name . '</th>';
+                echo '<td>' . $description . '</td>';
+
+                if ($parking === true) {
+                    echo '<td>' . 'Disponibile' . '</td>';
+                } else {
+                    echo '<td>' . 'Non Disponibile' . '</td>';
+                }
+
+                echo '<td>' . $vote . '</td>';
+                echo '<td>' . $distance . ' km' . '</td>';
+                echo '</tr>';
+            }
+            ?>
+        </tbody>
+    </table>
+
 
 </body>
 
