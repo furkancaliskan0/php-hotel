@@ -65,6 +65,7 @@
         </thead>
         <tbody>
             <?php
+
             foreach ($hotels as $hotel) {
                 $name = $hotel["name"];
                 $description = $hotel["description"];
@@ -72,19 +73,13 @@
                 $vote = $hotel["vote"];
                 $distance = $hotel["distance_to_center"];
 
-                echo '<tr>';
-                echo '<th scope="row">' . $name . '</th>';
-                echo '<td>' . $description . '</td>';
-
-                if ($parking === true) {
-                    echo '<td>' . 'Disponibile' . '</td>';
-                } else {
-                    echo '<td>' . 'Non Disponibile' . '</td>';
-                }
-
-                echo '<td>' . $vote . '</td>';
-                echo '<td>' . $distance . ' km' . '</td>';
-                echo '</tr>';
+                echo '<tr>'
+                    . '<td>' . $name . '</td>'
+                    . '<td>' . $description . '</td>'
+                    . '<td>' . ("parking" ? "Disponibile" : "Non Disponibile") . '</td>'
+                    . '<td>' . $vote . '</td>'
+                    . '<td>' . $distance . ' km' . '</td>'
+                    . '</tr>';
             }
             ?>
         </tbody>
