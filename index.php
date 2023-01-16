@@ -8,12 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Php Hotel</title>
-</head>
 
-<body>
     <?php
 
     $hotels = [
+
         [
             'name' => 'Hotel Belvedere',
             'description' => 'Hotel Belvedere Descrizione',
@@ -51,9 +50,38 @@
         ],
 
     ];
-    ?>
 
-    <table class="table bg-primary">
+    $filterParking = $_GET["parking"] ?? false;
+
+    $filterVote = $_GET["vote"] ?? 0;
+    ?>
+</head>
+
+<body>
+
+    <form>
+        <label for="parking">Parking</label>
+        <input type="checkbox" name="parking" <?php
+        if ($filterParking) {
+
+            echo "checked";
+        }
+        ?>>
+        <br>
+        <label for="vote">Vote</label>
+        <input type="text" name="vote" <?php
+        if ($filterVote != 0) {
+
+            echo "value='" . $filterVote . "'";
+        }
+        ?>>
+        <br>
+        <input type="submit" value="FILTER">
+    </form>
+
+    <br><br>
+
+    <table class="table text-light bg-info rounded-3">
         <thead>
             <tr>
                 <th scope="col">Nome Hotel</th>
@@ -67,25 +95,33 @@
             <?php
 
             foreach ($hotels as $hotel) {
+
                 $name = $hotel["name"];
                 $description = $hotel["description"];
                 $parking = $hotel["parking"];
                 $vote = $hotel["vote"];
                 $distance = $hotel["distance_to_center"];
 
-                echo '<tr>'
-                    . '<td>' . $name . '</td>'
-                    . '<td>' . $description . '</td>'
-                    . '<td>' . ("parking" ? "Disponibile" : "Non Disponibile") . '</td>'
-                    . '<td>' . $vote . '</td>'
-                    . '<td>' . $distance . ' km' . '</td>'
-                    . '</tr>';
+                if (
+                    $vote >= $filterVote
+                    && (!$filterParking
+                        || ($filterParking && $parking)
+                    )
+                ) {
+
+                    echo '<tr>'
+                        . '<td>' . $name . '</td>'
+                        . '<td>' . $description . '</td>'
+                        . '<td>' . ("parking" ? "Disponibile" : "Non Disponibile") . '</td>'
+                        . '<td>' . $vote . '</td>'
+                        . '<td>' . $distance . ' km' . '</td>'
+                        . '</tr>';
+
+                }
             }
             ?>
         </tbody>
     </table>
-
-
 </body>
 
 </html>
